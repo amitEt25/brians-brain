@@ -21,6 +21,12 @@ Or generate a random seed:
 python3 main.py --random-seed 42 --generations 200 --width 40 --height 20 --output-dir output
 ```
 
+## Example output
+
+screenshot of the simulation running in the terminal:
+
+![Simulation Output](terminal-output.png)
+
 ## Running Tests
 
 ```
