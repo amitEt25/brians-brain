@@ -21,20 +21,25 @@ class TestBriansBrain(unittest.TestCase):
         self.assertEqual(count, 1)
     
     def test_basic_rules(self):
-        self.sim.grid[1][1] = ON
-        self.sim.grid[1][3] = ON
-        next_state = self.sim.get_next_state(1, 2)
+        self.sim.grid[2][1] = ON
+        self.sim.grid[2][3] = ON
+        
+        neighbor_count = self.sim.count_neighbors(2, 2)
+        print(f"Cell (2,2) has {neighbor_count} ON neighbors")
+        next_state = self.sim.get_next_state(2, 2)
         self.assertEqual(next_state, ON)
         
-        next_state = self.sim.get_next_state(1, 1)
-        self.assertEqual(next_state, DYING)
+        self.sim.step()
+        self.assertEqual(self.sim.grid[2][1], DYING)
+        self.assertEqual(self.sim.grid[2][2], ON)
+        self.assertEqual(self.sim.grid[2][3], DYING)
         
-        self.sim.grid[2][2] = DYING
-        next_state = self.sim.get_next_state(2, 2)
-        self.assertEqual(next_state, OFF)
+        self.sim.step()
+        self.assertEqual(self.sim.grid[2][1], OFF)
+        self.assertEqual(self.sim.grid[2][2], DYING)
+        self.assertEqual(self.sim.grid[2][3], OFF)
     
     def test_step_generation(self):
-        """Test that step() increments generation counter"""
         initial_gen = self.sim.generation
         self.sim.step()
         self.assertEqual(self.sim.generation, initial_gen + 1)
